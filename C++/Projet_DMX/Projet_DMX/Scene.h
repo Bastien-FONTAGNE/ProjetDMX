@@ -15,4 +15,5 @@ public:
 	bool update(QSqlDatabase* db) override;
 	bool deletee(QSqlDatabase* db) override;
 
+
 };
