@@ -11,8 +11,15 @@ function Login() {
     e.preventDefault();
     console.log('Pseudo:', username);
     console.log('Mot de passe:', password);
-    // Ici tu pourrais envoyer vers ton serveur
-  };
+     // Appel au back-end ici pour valider le login
+  const isValid = username === 'admin' && password === 'admin'; 
+
+  if (isValid) {
+    navigate('/Home'); 
+  } else {
+    alert('Identifiants incorrects');
+  }
+};
 
   return (
     <div style={{ display: 'flex', height: '100vh', justifyContent: 'center', alignItems: 'center' }}>
