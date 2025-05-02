@@ -51,5 +51,8 @@
     <ClInclude Include="configurationtrame.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="channelvalues.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
