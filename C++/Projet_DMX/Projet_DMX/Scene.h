@@ -13,7 +13,7 @@ public:
 
 	bool create(QSqlDatabase* db) override;
 	bool update(QSqlDatabase* db) override;
-	bool deletee(QSqlDatabase* db) override;
-
+	bool deletee(QSqlDatabase* db) override; //ajout d'un "e" car le mot delete ne passe pas
+	                                                                                                                                                                                                                                                                                                        
 
 };
