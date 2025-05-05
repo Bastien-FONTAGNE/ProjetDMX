@@ -54,5 +54,11 @@
     <ClInclude Include="channelvalues.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Equipment.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Channel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -99,8 +99,10 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Channel.h" />
     <ClInclude Include="channelvalues.h" />
     <ClInclude Include="configurationtrame.h" />
+    <ClInclude Include="Equipment.h" />
     <ClInclude Include="Interface_CUD.h" />
     <ClInclude Include="Scene.h" />
   </ItemGroup>
