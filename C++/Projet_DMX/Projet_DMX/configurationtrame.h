@@ -1,6 +1,8 @@
 #pragma once
 #ifndef CONFIGURATIONTRAME_H
 #define CONFIGURATIONTRAME_H
+#include <QtSql/qsqldatabase.h>
+#include "Equipment.h"
 
 
 
