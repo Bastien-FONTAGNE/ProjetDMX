@@ -2,6 +2,8 @@
 #include "Interface_CUD.h"
 #include <QtSql/qsqldatabase.h>
 #include "Channel.h"
+#include <qlist.h>
+#include "channelvalues.h"
 
 class Equipment : public Interface_CUD
 {
