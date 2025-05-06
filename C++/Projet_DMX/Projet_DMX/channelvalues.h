@@ -3,7 +3,7 @@
 #include <QtSql/qsqldatabase.h>
 #include "Channel.h"
 
-class channelvalue : public Interface_CUD
+class ChannelValue : public Interface_CUD, Channel
 {
 public:
 	int value;

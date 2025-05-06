@@ -92,6 +92,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Channel.cpp" />
+    <ClCompile Include="channelvalues.cpp" />
+    <ClCompile Include="configurationtrame.cpp" />
+    <ClCompile Include="DMX.cpp" />
+    <ClCompile Include="Equipment.cpp" />
+    <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="TrameManager.cpp" />
     <QtRcc Include="Projet_DMX.qrc" />
     <QtUic Include="Projet_DMX.ui" />
     <QtMoc Include="Projet_DMX.h" />
@@ -102,9 +109,11 @@
     <ClInclude Include="Channel.h" />
     <ClInclude Include="channelvalues.h" />
     <ClInclude Include="configurationtrame.h" />
+    <ClInclude Include="DMX.h" />
     <ClInclude Include="Equipment.h" />
     <ClInclude Include="Interface_CUD.h" />
     <ClInclude Include="Scene.h" />
+    <QtMoc Include="TrameManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">
