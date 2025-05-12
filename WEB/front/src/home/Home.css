@@ -1,3 +1,7 @@
+body {
+  background-image : url("./night_mood.webp"),
+}
+
 .home-container {
     display: flex;
     flex-direction: column;
