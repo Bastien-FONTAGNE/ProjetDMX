@@ -7,19 +7,36 @@ function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Pseudo:', username);
-    console.log('Mot de passe:', password);
-     // Appel au back-end ici pour valider le login
-  const isValid = username === 'admin' && password === 'admin'; 
 
-  if (isValid) {
-    navigate('/Home'); 
-  } else {
-    alert('Identifiants incorrects');
-  }
-};
+    try {
+      const response = await fetch('http://localhost:3001/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username, password }),
+      });
+
+      if (!response.ok) {
+        alert('Erreur de connexion');
+        return;
+      }
+
+      const data = await response.json();
+
+      if (data.success) {
+        localStorage.setItem('token', data.token)
+        navigate('/Home');
+      } else {
+        alert('Identifiants incorrects');
+      }
+    } catch (err) {
+      console.error('Erreur serveur :', err);
+      alert('Erreur serveur');
+    }
+  };
 
   return (
     <div style={{ display: 'flex', height: '100vh', justifyContent: 'center', alignItems: 'center' }}>
