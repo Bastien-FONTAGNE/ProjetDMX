@@ -10,10 +10,11 @@ app.use(express.json());
 
 // Connexion à la base de données
 const db = mysql.createConnection({
-  host: '127.0.0.1',
-  user: 'root',
-  password: 'GigaMDP25!',
-  database: 'Projet_BTS' // Change ceci avec le nom réel de ta base
+=======
+    host: "127.0.0.1",
+    user: "root",
+    password: "********",
+    database: "Projet_BTS"
 });
 
 // Test de connexion
