@@ -1,5 +1,11 @@
 ﻿#include <QCoreApplication>
+#include <QApplication>
 #include <QDebug>
+#include <Qtsql/qsqldatabase.h>
+#include <QtSql/qsqlerror.h>
+#include <iostream>
+#include <iomanip>
+#include <QtWidgets/QMainWindow>
 #include "Channel.h"
 #include "channelvalues.h"
 #include "configurationtrame.h"
@@ -7,27 +13,42 @@
 #include "Equipment.h"
 #include "Scene.h"
 #include "TrameManager.h"
+#include "Projet_DMX.h"
 
-// Simule la création d'un channel
-Channel* simulateChannel() {
-    Channel* c = new Channel();
-    c->name = "Red";
-    c->channelnumber = 2;
-    c->id = 42;
-    c->CurrentValue = 255;
-    return c;
+
+
+QSqlDatabase connectToDatabase() {
+    QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL");
+    db.setHostName("192.168.64.50");
+    db.setPort(3306);
+    db.setDatabaseName("Projet_BTS");
+    db.setUserName("root");
+    db.setPassword("GigaMDP25!");
+
+    return db;
+};
+
+QList<Channel*> simulateChannels() {
+    QList<Channel*> list;
+
+    QStringList noms = { "ShutterStrobe", "Red", "Green", "Blue", "White", "Intensity" };
+    for (int i = 0; i < noms.size(); ++i) {
+        Channel* c = new Channel();
+        c->name = noms[i];
+        c->channelnumber = i + 1;
+        c->id = i + 1;
+        list.append(c);
+    }
+
+    return list;
 }
 
-QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL");
-db.setHostName("192.168.64.50");
 
-
-// Simule la création d'un Equipment
 Equipment* simulateEquipment() {
     Equipment* e = new Equipment();
-    e->name = "TestProjector";
+    e->name = "Saber";
     e->id = 1;
-    e->channels.append(simulateChannel());
+    e->channels = simulateChannels();
     return e;
 }
 
@@ -36,7 +57,7 @@ Scene* simulateScene() {
     Scene* s = new Scene();
     s->id = 1;
     s->Name = "TestScene";
-    s->BackgroundColor = "#ff0000";
+    s->BackgroundColor = "#ff0800";
     s->TextColor = "#ffffff";
     return s;
 }
@@ -46,34 +67,62 @@ ConfigurationTrame* simulateConfigurationTrame() {
     return new ConfigurationTrame(simulateEquipment(), 1);
 }
 
-// Simule une valeur de channel
-ChannelValue* simulateChannelValue() {
-    ChannelValue* val = new ChannelValue();
-    val->value = 128;
-    val->Channel = simulateChannel();
-    return val;
+QList<ChannelValue*> simulateChannelValues(Equipment* eq) {
+    QList<ChannelValue*> values;
+    for (Channel* ch : eq->channels) {
+        ChannelValue* val = new ChannelValue();
+        val->Channel = ch;
+
+        if (ch->name == "Red") val->value = 255;
+        else if (ch->name == "Intensity") val->value = 255;
+        else val->value = 0;
+
+        values.append(val);
+    }
+    return values;
 }
 
 int main(int argc, char* argv[]) {
-    QCoreApplication a(argc, argv);
 
-    Channel* ch = simulateChannel();
-    qDebug() << "Channel simulé :" << ch->name << ch->CurrentValue;
+    QApplication app(argc, argv); // obligatoire pour les interfaces graphiques
 
-    ChannelValue* chv = simulateChannelValue();
-    qDebug() << "ChannelValue simulée :" << chv->value;
+    Projet_DMX window;
+    window.show();  // indispensable pour afficher la fenêtre
+
+    return app.exec();
+}
+
+    //Partie simulation
+
+    /*QCoreApplication a(argc, argv);
+    QSqlDatabase db = connectToDatabase();
 
     Equipment* eq = simulateEquipment();
-    qDebug() << "Equipment simulé :" << eq->name;
+    QList<ChannelValue*> chValues = simulateChannelValues(eq);
 
-    ConfigurationTrame* ct = simulateConfigurationTrame();
-    qDebug() << "Configuration valide ?" << ct->isValid();
-
-    Scene* sc = simulateScene();
-    qDebug() << "Scène simulée :" << sc->Name << sc->BackgroundColor;
+    qDebug() << "Équipement simulé :" << eq->name;
+    for (Channel* ch : eq->channels) {
+        qDebug() << "Canal" << ch->channelnumber << ":" << ch->name;
+    }
 
     TrameManager* tm = new TrameManager(nullptr);
-    qDebug() << "Scènes JSON simulées :" << tm->getScenesAsJSONString();
+    qDebug() << "Scenes JSON simuler :" << tm->getScenesAsJSONString();
+
+    // Construction de la trame DMX
+    std::array<unsigned char, 512> trameDMX = {};
+    for (ChannelValue* val : chValues) {
+        int index = val->Channel->channelnumber - 1;
+        trameDMX[index] = static_cast<unsigned char>(val->value);
+    }
+
+    // Affichage des 6 premiers canaux
+    qDebug() << "Trame DMX simulée (hex) :";
+    for (int i = 0; i < 6; ++i) {
+        qDebug() << "Canal"
+            << QString("%1").arg(i + 1, 3)
+            << ": 0x"
+            << QString("%1").arg(static_cast<int>(trameDMX[i]), 2, 16, QLatin1Char('0')).toUpper();
+    }
 
     return 0;
-}
+}*/
