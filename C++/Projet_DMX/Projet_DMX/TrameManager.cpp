@@ -21,7 +21,7 @@ void TrameManager::sendTrame() {
 }
 
 QString TrameManager::getScenesAsJSONString() {
-    return "[{\"id\":1,\"name\":\"Scène test\",\"backgroundColor\":\"#000000\",\"textColor\":\"#ffffff\"}]";
+    return "[{\"id\":1,\"name\":\"TestScene\",\"backgroundColor\":\"#ff0800\",\"textColor\":\"#ffffff\"}]";
 }
 
 void TrameManager::onWSClientConnected() {

@@ -5,7 +5,7 @@
 
 class Channel : public Interface_CUD {
 	
-public:
+public: 
 	QString name;
 	int channelnumber; 
 	int id;
